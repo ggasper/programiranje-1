@@ -25,8 +25,14 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> find_words(test_text, 'de')
 # {'izdere', 'debel', 'oddide', 'začudeno'}
 ###############################################################################
-
-
+import re
+def find_words(text, pattern):
+    pat = r'(\b\w*{}\w*\b)'.format(pattern)
+    d = []
+    for word in re.findall(pat, text):
+        d.append(word)
+    return set(d)
+print(find_words(test_text, 'de'))
 ###############################################################################
 # 2) Sestavite funkcijo [find_prefix], ki vrne množico vseh besed, ki se
 #    pojavijo v nizu in imajo dano predpono.
@@ -34,6 +40,15 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> find_prefix(test_text, 'zi')
 # {'zibala', 'zibel', 'zibelko'}
 ###############################################################################
+def find_prefix(text, pattern):
+    pat = r'\b{}\w*'.format(pattern)
+
+    s = set()
+
+    for word in re.findall(pat, text):
+        s.add(word)
+    return s
+print(find_prefix(test_text, 'zi'))
 
 
 ###############################################################################
@@ -43,7 +58,13 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> find_suffix(test_text, 'la')
 # {'zibala', 'razveselila', 'prestrašila', 'šivala', 'opazila', 'tla'}
 ###############################################################################
-
+def find_suffix(text, pattern):
+    pat = r'\w*{}\b'.format(pattern)
+    s = set()
+    for word in re.findall(pat, text):
+        s.add(word)
+    return s
+print(find_suffix(test_text, 'la'))   
 
 ###############################################################################
 # 4) Sestavite funkcijo [double_letters], ki sprejme niz in vrne množico vseh
@@ -52,3 +73,10 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> double_letters('A volunteer is worth twenty pressed men.')
 # {'volunteer', 'pressed'}
 ###############################################################################
+def double_letters(text):
+    pat = r'(\b\w*([a-z])\2\w*\b)'
+    s = set()
+    for word in re.findall(pat, text):
+        s.add(word[0])
+    return s
+print(double_letters('A volunteer is worth twenty pressed men.'))
